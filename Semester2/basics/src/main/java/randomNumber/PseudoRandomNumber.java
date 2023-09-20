@@ -35,8 +35,6 @@ public class PseudoRandomNumber {
 
         //calculate pseudo random number according to lehmer scheme
         for(int i = 0; i<amount; i++){
-            x=(x*MULTIPLIER)%MODULUS;
-            //System.out.println(x);
             //adjust number for range
             y=(x % (max-min))+min;
             System.out.println(y);
