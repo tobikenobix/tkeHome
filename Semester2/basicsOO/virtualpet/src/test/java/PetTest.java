@@ -45,7 +45,7 @@ public class PetTest{
         IllegalArgumentException.class, () -> new Pet(null));
 
   }
-/*
+
   @Test
   public void testIsSadHappy(){
     assertFalse("new pet is not sad", pet.isSad());
@@ -272,6 +272,6 @@ public class PetTest{
 
 
   }
-*/
+
 
 }
