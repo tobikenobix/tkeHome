@@ -10,7 +10,11 @@ public class VirtualPetMain {
         System.out.println(morgana.toString());
         System.out.println(rabbit.toString());
 
-        Pet roscoClone=new Pet(rosco);
-        System.out.println(roscoClone.equals(rosco));
+
+
+        PetOwner jimmy = new PetOwner("Jimmy", rosco, rabbit);
+        PetOwner timmy = new PetOwner("Timmy", morgana);
+        System.out.println(jimmy);
+        System.out.println(timmy);
     }
 }

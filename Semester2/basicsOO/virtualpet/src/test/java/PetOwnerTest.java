@@ -1,7 +1,9 @@
-/*
+
 import static org.junit.Assert.*;
 import org.junit.*;
 import virtualpets.Pet;
+import virtualpets.PetOwner;
+import virtualpets.PetType;
 
 public class PetOwnerTest{
 
@@ -151,4 +153,3 @@ public class PetOwnerTest{
 
 }
 
-*/
