@@ -53,11 +53,11 @@ public class ShipSalvage {
     public static void printMap(FieldState[][] map, boolean showHidden){
         checkValidMap(map);
         String beginEnd ="+----------+";
-        System.out.println("ABCDEFGHIJ");
+        System.out.println(" ABCDEFGHIJ ");
         System.out.println(beginEnd);
 
         for(int row = 0; row<10; row++){
-            System.out.println(row+1+"|");
+            System.out.print(row+1+"|");
             for(int column =0; column<10; column++){
                 char output;
                 if(map[row][column] == FieldState.OCCUPIED_HIDDEN && !showHidden){
@@ -66,12 +66,17 @@ public class ShipSalvage {
                 else output=map[row][column].getOutput();
                 System.out.print(output);
             }
-            System.out.print("|");
+            System.out.println("|");
         }
         System.out.println(beginEnd);
 
     }
 
+    /**
+     * Check if Game has ended - all ships detected
+     * @param map Map on which this game is played
+     * @return true if all ships detected, false otherwise
+     */
     public static boolean allSalvaged(FieldState map[][]){
         checkValidMap(map);
         for(int i=0; i < 10; i++){
@@ -84,10 +89,51 @@ public class ShipSalvage {
         return true;
     }
 
+    public static String probeField(FieldState[][]map, String field){
+        checkValidMap(map);
+        if(field == null) throw new IllegalArgumentException("Field can not be null!");
+        char first = Character.toUpperCase(field.charAt(0));
+        int scnd= Character.getNumericValue(field.charAt(1))-1;
+        //check for invalid input
+      if(field.contains(" ")||field.length()>2 || (first <'A'|| first >'J') || (scnd <0 || scnd>9)){
+            return "Invalid input, please try again.";
+        }
+        else{
+            int column=first - 'A';
+            FieldState state = map[scnd][column];
+            switch (state){
+                case EMPTY -> {
+                    map[scnd][column]= FieldState.MISS;
+                    return "Nothing here!";
+                }
+                case OCCUPIED_HIDDEN -> {
+                    map[scnd][column]= FieldState.OCCUPPIED_SALVAGED;
+                    return "Ship found!";
+                }
+                case OCCUPPIED_SALVAGED, MISS -> {
+                    return "You already checked this.";
+
+                }
+                default -> {
+                    return "this is madness you reached this!";
+                }
+            }
+
+        }
+    }
+
 
     public static void main(String[] args){
         System.out.println("Hello? \n");
-        //printMap(getExample(), true);
+        //printMap(getExample(), false);
+        FieldState[][] original = ShipSalvage.getExample();
+        FieldState[][] map = ShipSalvage.getExample();
+
+        ShipSalvage.probeField(map, "A1");
+        original[0][0] = FieldState.OCCUPPIED_SALVAGED;
+
+        printMap(original, false);
+        printMap(map, false);
     }
 
 

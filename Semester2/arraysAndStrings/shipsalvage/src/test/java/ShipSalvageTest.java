@@ -190,7 +190,7 @@ public class ShipSalvageTest {
         ShipSalvage.allSalvaged(map));
 
   }
-/*
+
   @Test
   public void testProbeFieldValid(){
     FieldState[][] original = ShipSalvage.getExample();
@@ -240,5 +240,5 @@ public class ShipSalvageTest {
 
 
 
-  */
+
 }
