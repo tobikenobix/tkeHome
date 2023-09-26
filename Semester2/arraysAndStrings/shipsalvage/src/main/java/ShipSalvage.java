@@ -110,7 +110,7 @@ public class ShipSalvage {
         int scnd= Character.getNumericValue(field.charAt(1));
         //check for invalid input
       if((first <'A'|| first >'J') || (scnd <0 || scnd>9)){
-            System.out.println("Invalid input, use letters form a to j and numbers form 1 to 10");
+            System.out.println("Invalid input, use letters form a to j and numbers form 0 to 9");
         }
         else{
             //get numeric representation of char by subtract A
@@ -140,6 +140,19 @@ public class ShipSalvage {
 
 
     public static void main(String[] args){
+        //its game time
+        FieldState[][] gameMap = getExample();
+        Scanner sc = new Scanner(System.in);
+        String choice;
+
+        while(!allSalvaged(gameMap)){
+            printMap(gameMap, false);
+            System.out.println("Please enter your coordinates : ");
+            choice=sc.nextLine();
+            probeField(gameMap,choice);
+        }
+        System.out.println("nice job, all Ships uncovered!");
+        printMap(gameMap,false);
 
     }
 
