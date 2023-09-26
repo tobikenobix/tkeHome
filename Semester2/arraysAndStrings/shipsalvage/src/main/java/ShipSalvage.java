@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class ShipSalvage {
 
     //definition of an example Map
@@ -89,33 +91,46 @@ public class ShipSalvage {
         return true;
     }
 
-    public static String probeField(FieldState[][]map, String field){
+    /**
+     * game logic - choose a field and see if it is a hit or not
+     * @param map FieldState 2-d array, the map of the game
+     * @param field file to inspect, e.g. a1 or B2
+     * @return String value if it was a hit or not
+     */
+    public static void probeField(FieldState[][]map, String field){
         checkValidMap(map);
         if(field == null) throw new IllegalArgumentException("Field can not be null!");
+        if(field.contains(" ")||field.length()!=2) {
+            System.out.println("Input has to be two chars");
+            return;
+        }
         char first = Character.toUpperCase(field.charAt(0));
+        //minus -1 at the end since the user input starts at 1 and we are using normal array annotation
         int scnd= Character.getNumericValue(field.charAt(1))-1;
         //check for invalid input
-      if(field.contains(" ")||field.length()>2 || (first <'A'|| first >'J') || (scnd <0 || scnd>9)){
-            return "Invalid input, please try again.";
+      if((first <'A'|| first >'J') || (scnd <0 || scnd>9)){
+            System.out.println("Invalid input, use letters form a to j and numbers form 1 to 10");
         }
         else{
+            //get numeric representation of char by subtract A
             int column=first - 'A';
+            //update field values and return user feedback
             FieldState state = map[scnd][column];
             switch (state){
                 case EMPTY -> {
                     map[scnd][column]= FieldState.MISS;
-                    return "Nothing here!";
+                   System.out.println("Nothing here!");
                 }
                 case OCCUPIED_HIDDEN -> {
                     map[scnd][column]= FieldState.OCCUPPIED_SALVAGED;
-                    return "Ship found!";
+                    System.out.println("Ship found!");
                 }
                 case OCCUPPIED_SALVAGED, MISS -> {
-                    return "You already checked this.";
+                    System.out.println("You already checked this.");
 
                 }
                 default -> {
-                    return "this is madness you reached this!";
+                    System.out.println("this is madness you reached this!");
                 }
             }
 
@@ -124,16 +139,7 @@ public class ShipSalvage {
 
 
     public static void main(String[] args){
-        System.out.println("Hello? \n");
-        //printMap(getExample(), false);
-        FieldState[][] original = ShipSalvage.getExample();
-        FieldState[][] map = ShipSalvage.getExample();
 
-        ShipSalvage.probeField(map, "A1");
-        original[0][0] = FieldState.OCCUPPIED_SALVAGED;
-
-        printMap(original, false);
-        printMap(map, false);
     }
 
 
