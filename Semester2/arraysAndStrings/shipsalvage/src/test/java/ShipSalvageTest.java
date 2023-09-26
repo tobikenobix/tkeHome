@@ -196,12 +196,12 @@ public class ShipSalvageTest {
     FieldState[][] original = ShipSalvage.getExample();
     FieldState[][] map = ShipSalvage.getExample();
 
-    ShipSalvage.probeField(map, "A1");
+    ShipSalvage.probeField(map, "A0");
     original[0][0] = FieldState.OCCUPPIED_SALVAGED;
     assertTrue("field A1 must be changed to OCCUPPIED_SALVAGED",
         Arrays.deepEquals(original, map));
 
-    ShipSalvage.probeField(map, "c4");
+    ShipSalvage.probeField(map, "c3");
     original[3][2] = FieldState.MISS;
     assertTrue("field c1 must be changed to MISS",
         Arrays.deepEquals(original, map));
@@ -225,7 +225,7 @@ public class ShipSalvageTest {
     assertTrue("must not change map on blank input",
         Arrays.deepEquals(original, map));
 
-    String[] invalidInputs = {"C", "5", "AVier", "B0", "B11", "P9", "A9A", "G  8", "   A2", "E9    "};
+    String[] invalidInputs = {"C", "5", "AVier", "B10", "B11", "P9", "A9A", "G  8", "   A2", "E9    "};
     for (String invalidInput : invalidInputs){
     
         ShipSalvage.probeField(map, invalidInput);

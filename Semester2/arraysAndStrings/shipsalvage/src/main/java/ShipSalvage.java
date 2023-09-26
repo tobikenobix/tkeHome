@@ -59,7 +59,7 @@ public class ShipSalvage {
         System.out.println(beginEnd);
 
         for(int row = 0; row<10; row++){
-            System.out.print(row+1+"|");
+            System.out.print(row+"|");
             for(int column =0; column<10; column++){
                 char output;
                 if(map[row][column] == FieldState.OCCUPIED_HIDDEN && !showHidden){
@@ -100,13 +100,14 @@ public class ShipSalvage {
     public static void probeField(FieldState[][]map, String field){
         checkValidMap(map);
         if(field == null) throw new IllegalArgumentException("Field can not be null!");
+        //check for invalid input
         if(field.contains(" ")||field.length()!=2) {
             System.out.println("Input has to be two chars");
             return;
         }
         char first = Character.toUpperCase(field.charAt(0));
         //minus -1 at the end since the user input starts at 1 and we are using normal array annotation
-        int scnd= Character.getNumericValue(field.charAt(1))-1;
+        int scnd= Character.getNumericValue(field.charAt(1));
         //check for invalid input
       if((first <'A'|| first >'J') || (scnd <0 || scnd>9)){
             System.out.println("Invalid input, use letters form a to j and numbers form 1 to 10");
