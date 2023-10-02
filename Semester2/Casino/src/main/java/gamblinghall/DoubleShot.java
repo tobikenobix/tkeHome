@@ -1,5 +1,9 @@
 package gamblinghall;
 
+/**
+ * Implementation of a Double shot machine. Is a SlotMachine
+ * @author tobias
+ */
 public class DoubleShot extends SlotMachine{
     //stake player sets per game
     private final int stake;

@@ -12,6 +12,18 @@ public class GamblingHallMain {
         System.out.println(DS1.printInfo());
         System.out.println(DS2.printInfo());
 
+        //play roulette
+
+        var RL1= new Roulette("Monte Carlo",RouletteGameType.RED);
+        var RL2 = new Roulette("Dummy", 3);
+        for(int i =0; i<100000; i++){
+            RL1.play(5);
+            RL2.play(5);
+        }
+        System.out.println(RL1.printInfo());
+        System.out.println(RL2.printInfo());
+        System.out.println(RL2.toString());
+
     }
 
 }

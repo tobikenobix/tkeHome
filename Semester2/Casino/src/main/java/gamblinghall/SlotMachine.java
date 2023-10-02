@@ -2,6 +2,10 @@ package gamblinghall;
 
 import java.util.Objects;
 
+/**
+ * implementation of Slot Machine. Provides Methods and attributes used by all other machines.
+ * @author tobias
+ */
 public abstract class SlotMachine {
     private final String name;
     private double revenue;
