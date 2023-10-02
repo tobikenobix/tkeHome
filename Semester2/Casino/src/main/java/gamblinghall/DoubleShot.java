@@ -77,4 +77,12 @@ public class DoubleShot extends SlotMachine{
 
         return win;
     }
+
+    /**
+     * Prints information about game statistics
+     * @return string of amount of revenue, profit, jackpot hits
+     */
+    public String printInfo(){
+        return String.format("%s: Revenue: %f \nProfit: %f\nJackpot hit: %d", this.getName(), this.getRevenue(), this.getProfit(), this.getCountJackPot());
+    }
 }
