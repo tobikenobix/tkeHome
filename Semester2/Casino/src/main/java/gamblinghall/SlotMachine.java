@@ -1,5 +1,7 @@
 package gamblinghall;
 
+import java.util.Objects;
+
 public abstract class SlotMachine {
     private final String name;
     private double revenue;
@@ -65,7 +67,40 @@ public abstract class SlotMachine {
         profit-=cash;
     }
 
-    public abstract double play();
+    /**
+     * abstract methode implemented in the extended classes. Used to implement the game logic of the machine.
+     * @return double value of money
+     */
+    public abstract double play(double stake);
 
+    /**
+     * String representation of SlotMachine
+     * @return attribute name of the machine
+     */
+    @Override
+    public String toString(){
+        return this.name;
+    }
 
+    /**
+     * Compares two SlotMachines by name and class
+     * @param o Object to compare
+     * @return true if equal, otherwise false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SlotMachine that = (SlotMachine) o;
+        return Objects.equals(name, that.name);
+    }
+
+    /**
+     * Generates HashCode based on attribute name
+     * @return hash value
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
