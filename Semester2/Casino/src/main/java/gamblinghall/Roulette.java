@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.TreeSet;
 
-public class Roulette extends SlotMachine{
+public class Roulette extends SlotMachine implements GamblingMachine{
     private RouletteGameType rouletteGameType;
     private int betNumber;
 
@@ -72,7 +72,7 @@ public class Roulette extends SlotMachine{
     @Override
     public double play(double stake){
         //stake has to be greater 0
-        if(stake<=0) throw new IllegalArgumentException("Stake can not be zero in Roulette!");
+        if(stake<=0 || stake >10) throw new IllegalArgumentException("Stake can not be zero in Roulette!");
         //Random number generator to set winning number between 0 and 36
         int randRoulette = (int)(Math.random()*36);
         payIn(stake);
@@ -125,6 +125,11 @@ public class Roulette extends SlotMachine{
         return 0;
     }
 
+    @Override
+    public double getRealPayOutRate(){
+        return ((this.getRevenue() -  this.getProfit())/this.getRevenue());
+    }
+
     /**
      * String representation of Roullete
      * @return name and game mode as String
@@ -142,7 +147,7 @@ public class Roulette extends SlotMachine{
      * @return String representation of revenue and profit
      */
     public String printInfo(){
-        return String.format("%s: Revenue: %f \nProfit: %f", this.getName(), this.getRevenue(), this.getProfit());
+        return String.format("%s: Revenue: %.2f \nProfit: %.2f \nReal pay-out-rate: %.2f", this.getName(), this.getRevenue(), this.getProfit(), this.getRealPayOutRate());
     }
 
 }

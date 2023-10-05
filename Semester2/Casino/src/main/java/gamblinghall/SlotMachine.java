@@ -53,22 +53,26 @@ public abstract class SlotMachine {
     // #### getter block end
 
     /**
-     * Simulates customer pay-in. Updates revenue by adding cash to it
+     * Simulates customer pay-in. Updates revenue by adding cash to it. Increments countGames
      * @param cash amount of money customer put in
      */
     public void payIn(double cash){
         if(cash<=0)throw new IllegalArgumentException("cash can not be null");
         revenue +=cash;
         profit+=cash;
+        //stake has to be put in, so we can increment here and don't need to use a separate method
+        countGames++;
     }
 
     /**
-     * Simulates customer pay-out. Updates profit by subtracting the cash from it
+     * Simulates customer pay-out. Updates profit by subtracting the cash from it. Increments countWins
      * @param cash amount of money paid out to the customer
      */
     public void payOut(double cash){
         if(cash<=0)throw new IllegalArgumentException("cash can not be null");
         profit-=cash;
+        //can be done here since a payOut only comes with a win
+        countWins++;
     }
 
     /**

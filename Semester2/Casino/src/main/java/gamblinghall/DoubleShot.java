@@ -4,13 +4,14 @@ package gamblinghall;
  * Implementation of a Double shot machine. Is a SlotMachine
  * @author tobias
  */
-public class DoubleShot extends SlotMachine{
+public class DoubleShot extends SlotMachine implements GamblingMachine{
     //stake player sets per game
     private final int stake;
     //current jackpot, gets increased by 0,1 every game
     private double jackpot;
     //amount of jackpot wins
     private int countJackPot;
+    private double win;
 
     //### getter block
     public int getStake() {
@@ -62,7 +63,7 @@ public class DoubleShot extends SlotMachine{
         double jckptProb=0.001;
         double payOutRate=0.92;
         //value that gets paid out to customer
-        double win = 0;
+        win = 0;
         //random number to see if user won or not
         double rndm = Math.random();
 
@@ -82,11 +83,17 @@ public class DoubleShot extends SlotMachine{
         return win;
     }
 
+    @Override
+    public double getRealPayOutRate(){
+
+        return ((this.getRevenue() -  this.getProfit())/this.getRevenue());
+    }
+
     /**
      * Prints information about game statistics
      * @return string of amount of revenue, profit, jackpot hits
      */
     public String printInfo(){
-        return String.format("%s: Revenue: %f \nProfit: %f\nJackpot hit: %d", this.getName(), this.getRevenue(), this.getProfit(), this.getCountJackPot());
+        return String.format("%s: Revenue: %f \nProfit: %f\nJackpot hit: %d \nReal pay-out-rate is: %.2f", this.getName(), this.getRevenue(), this.getProfit(), this.getCountJackPot(), this.getRealPayOutRate());
     }
 }

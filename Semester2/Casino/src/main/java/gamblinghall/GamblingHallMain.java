@@ -22,7 +22,15 @@ public class GamblingHallMain {
         }
         System.out.println(RL1.printInfo());
         System.out.println(RL2.printInfo());
-        System.out.println(RL2.toString());
+        System.out.println(RL2);
+
+        //play some Arcade fun
+        var AF1 = new ArcadeFun("pinball");
+        for(int i=0; i<50; i++){
+            AF1.play(1);
+        }
+        System.out.println(AF1);
+
 
     }
 
