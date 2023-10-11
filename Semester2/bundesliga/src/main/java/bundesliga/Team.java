@@ -35,8 +35,8 @@ public class Team {
      */
     public Team(String name){
         if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        if(teamStore.containsKey(name)) throw new IllegalArgumentException("Team already in store!");
-        this.name = Helper.getKeyByName(name);
+        if(teamStore.containsKey(Helper.getKeyByName(name))) throw new IllegalArgumentException("Team already in store!");
+        this.name = name.trim();
         teamStore.put(Helper.getKeyByName(name), this);
         
     }
@@ -56,7 +56,7 @@ public class Team {
      */
     public static boolean contains(String name){
         if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        return teamStore.containsKey(name);
+        return teamStore.containsKey(Helper.getKeyByName(name));
     }
 
     /**
@@ -69,8 +69,8 @@ public class Team {
      */
     public static Team getTeam(String name){
         if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        if(!contains(name)) throw new IllegalArgumentException("Team not in store!");
-        return teamStore.get(name);
+        if(!contains(Helper.getKeyByName(name))) throw new IllegalArgumentException("Team not in store!");
+        return teamStore.get(Helper.getKeyByName(name));
     }
 
     /**
@@ -79,9 +79,7 @@ public class Team {
      * @param name the name of the team that should be removed
      */
     public static void removeTeam(String name){
-        if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        if(!contains(name)) throw new IllegalArgumentException("Team not in store!");
-        teamStore.remove(name);
+        teamStore.remove(Helper.getKeyByName(name));
     }
 
 

@@ -7,103 +7,103 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-/*
- * TODO: Ergänzen Sie die Klasse, wo angegeben. Für die Erzeugung eines Schlüssels aus dem Namen 
- * können Sie die Methode getKeyByName() aus der Helper-Klasse verwenden. Schlüssel sollten 
- * grundsätzlich keine Leerzeichen enthalten. Schlüssel sollten auch nur aus Großbuchstaben bestehen.
- * Damit kann sichergestellt werden, dass auch ein String " b UNDES LIGA" der richtigen Liga zugeordnet 
- * wird
- *   
- */
 
-/** represents a league. Furthermore, it contains a static store of all created leagues */ 
 public class League {
 
     /** the private static store of all leagues. The key is a String and the value is a league */
+    //TODO: Deklarieren Sie eine statische Map entsprechend des JavaDocs
+    private static Map<String,League> leagues = new HashMap<String,League>();
 
-    private static HashMap<String, League> leagueStore = new HashMap<>();
-    
     /** The name of the league */
     private String name;
 
     /** The teams playing in the league */
-    /*
+    /* TODO: Initialisieren Sie teams mit einer passenden Collection.
      * Jedes Team darf nur ein einziges mal in der Collection vorkommen.
      * Die Sortierung ist dabei irrelevant
      */
-    private HashSet<Team> teams = new HashSet<Team>();
-    
+    private Set<Team> teams = new HashSet<Team>();
 
     /** The games played in the league */
-    /*
+    /* TODO: Initialisieren Sie games mit einer passenden Collection.
      * Jedes Game darf nur ein einziges mal in der Collection vorkommen.
-     * Die Sortierung ist dabei sehr wichtig. Implementieren Sie hierfür 
+     * Die Sortierung ist dabei sehr wichtig. Implementieren Sie hierfür
      * auch die natürliche Ordnung von Game (vgl Game).
-     */  
-    private TreeSet<Game> games = new TreeSet<Game>();
+     */
+    private Set<Game> games = new TreeSet<Game>();
 
     /**
-     * The Constructor of the team League. Checks if there is already a 
-     * league whose key matches the passed name. Writes the new league in 
+     * The Constructor of the team League. Checks if there is already a
+     * league whose key matches the passed name. Writes the new league in
      * the league store.
-     * 
+     *
      * @param name the name of the new team
-     * @throws IllegalArgumentException if there is already a 
-     * league whose key matches the passed name. 
+     * @throws IllegalArgumentException if there is already a
+     * league whose key matches the passed name.
      * @throws IllegalArgumentException if name is null or empty
      * @throws IllegalArgumentException if league with the given name already exists
      */
     public League(String name){
-        if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        if(leagueStore.containsKey(Helper.getKeyByName(name))) throw new IllegalArgumentException("League already exists");
-        this.name = Helper.getKeyByName(name);
-        leagueStore.put(Helper.getKeyByName(name), this);
-        
+        //TODO: Implementieren Sie den Konstruktor entsprechend des JavaDocs
+        //League.contains throws a IllegalArgumentException if name is null or empty
+        if(League.containsLeague(name))
+            throw new IllegalArgumentException("League already exists");
+        String key = Helper.getKeyByName(name);
+        this.name = name.trim();
+        leagues.put(key,this);
     }
 
     /**
      * Adds a team to the local set teams
-     * 
+     *
      * @param team the team to add
      * @throws IllegalArgumentException if team is null
      * @throws IllegalArgumentException in team is already in Set
      */
     public void addTeam(Team team){
-        if(team == null || teams.contains(team)) throw new IllegalArgumentException("team null or already in store!");
-        teams.add(team);
+        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
+        if(team == null)
+            throw new IllegalArgumentException("Team is null");
+        if(!teams.add(team)){
+            throw new IllegalArgumentException("Team already in league");
+        }
     }
 
     /**
      * Fetches a team from the static team-store based on the name passed
      * and calls addTeam(Team team) method
-     * 
+     *
      * @param name the name of the team
      */
     public void addTeam(String name){
-
-        if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        addTeam(Team.getTeam(name));
+        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
+        Team team = Team.getTeam(name);
+        this.addTeam(team);
     }
 
     /**
      * Adds a game to the local set games
-     * 
+     *
      * @param game the game to add
      * @throws IllegalArgumentException if game is null
      * @throws IllegalArgumentException in game is already in Set
      */
     public void addGame(Game game){
-        if(game == null || games.contains(game)) throw new IllegalArgumentException("game can not be null or already be in set!");
-        games.add(game);
-        
+        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
+        if(game == null)
+            throw new IllegalArgumentException("game is null");
+
+        if(!games.add(game)){
+            throw new IllegalArgumentException("game is already in Set");
+        }
     }
 
-    
+
 
     /**
-     * Fetches the matching team from the static team-store based on the name passed. 
+     * Fetches the matching team from the static team-store based on the name passed.
      * Checks if team is in local Set teams. If not IllegalArgumentException is thrown.
-     * 
+     *
      * @param name the name of the team
      * @return the team that matches the name given name
      * @throws IllegalArgumentException if name is null or empty
@@ -111,14 +111,14 @@ public class League {
      * @throws IllegalArgumentException if team is not meber of the local Set teams
      */
     public Team getTeam(String name){
-
-        if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        if(!teams.contains(Team.getTeam(name))) throw new IllegalArgumentException("Team not in team list!");
-        return Team.getTeam(name);
-        
+        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
+        Team team = Team.getTeam(name);
+        if(!this.teams.contains(team))
+            throw new IllegalArgumentException("Team not in league");
+        return team;
     }
 
-    
+
     public Table getTable(){
         return getTable(null);
     }
@@ -136,63 +136,66 @@ public class League {
     }
 
     /**
-     * Returns a statement whether there is a league in the static league-store whose 
+     * Returns a statement whether there is a league in the static league-store whose
      * key matches the passed name
-     * 
-     * @param name the name of the league 
-     * @return a statement whether there is a league in the league-store whose 
+     *
+     * @param name the name of the league
+     * @return a statement whether there is a league in the league-store whose
      * key matches the passed name
      * @throws IllegalArgumentException if name is null or empty
      */
     public static boolean containsLeague(String name){
-        if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        return leagueStore.containsKey(name);
-        
+        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
+        //getKeyByName throws a IllegalArgumentException if name is null or empty
+        String key = Helper.getKeyByName(name);
+        return leagues.containsKey(key);
     }
 
     /**
-     * Fetches the matching league from the static league-store based on the name passed. 
-     * 
+     * Fetches the matching league from the static league-store based on the name passed.
+     *
      * @param name the name of the league
      * @return the league that matches the given name
      * @throws IllegalArgumentException if name is null or empty
      * @throws IllegalArgumentException if no league for the name is found
      */
     public static League getLeague(String name){
-
-        if(name == null || name.isEmpty()) throw new IllegalArgumentException("name can not be null or empty!");
-        if(!containsLeague(name)) throw new IllegalArgumentException("name is not available!");
-        return leagueStore.get(name);
+        //TODO: Implementieren Sie den Konstruktor entsprechend des JavaDocs
+        //getKeyByName throws a IllegalArgumentException if name is null or empty
+        League league = leagues.get(Helper.getKeyByName(name));
+        if(league == null)
+            throw new IllegalArgumentException("No league with given name found");
+        return league;
     }
 
     /**
      * Removes a league with the given name from the static league-store
-     * 
+     *
      * @param name the name of the league that should be removed
      */
     public static void removeLeague(String name){
-
-        leagueStore.remove(name);
+        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
+        leagues.remove(Helper.getKeyByName(name));
     }
 
     /**
      * returns a unmodifiable Copy of the local Set teams
-     * 
+     *
      * @return a unmodifiable Copy of the local Set teams
      */
     public Set<Team> getTeams() {
-
-        return Set.copyOf(teams);
+        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
+        return Collections.unmodifiableSet(teams);
     }
 
     /**
      * returns a unmodifiable Copy of the local Set games
-     * 
+     *
      * @return a unmodifiable Copy of the local Set games
      */
     public Set<Game> getGames() {
-
-        return Set.copyOf(games);
+        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
+        return Collections.unmodifiableSet(games);
     }
 
     @Override
@@ -219,5 +222,5 @@ public class League {
             return false;
         return true;
     }
- 
+
 }

@@ -1,5 +1,6 @@
 package bundesliga;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,8 +15,8 @@ import java.util.List;
 public class Table {
 
     /** Each team is represented in a TableEntry.  */
-    //TODO: Initialisieren Sie das Attribut entries direkt bei der Deklaration
-    private List<TableEntry> entries ;
+    //Initialisieren Sie das Attribut entries direkt bei der Deklaration
+    private List<TableEntry> entries = new ArrayList<TableEntry>();
 
     /** The league to which this object belongs */
     private final League league;
@@ -75,8 +76,9 @@ public class Table {
      * TableEntry
      */
     public List<TableEntry> getTableNaturalSorted(){
-        //TODO: Implementieren Sie die Methode entsprechend des JavaDocs
-        
+        //Implementieren Sie die Methode entsprechend des JavaDocs
+        entries.sort(null);
+        return Collections.unmodifiableList(entries);
     }
 
     /**
@@ -87,10 +89,18 @@ public class Table {
      */
     public List<TableEntry> getTableSortedByName(){
         /*
-         * TODO: Implementieren Sie die Methode entsprechend des JavaDocs. Verwenden Sie eine 
+         * Implementieren Sie die Methode entsprechend des JavaDocs. Verwenden Sie eine
          * anonyme Comparator-Klasse für die Sortierung
-         */ 
-        
+         */
+        entries.sort(new Comparator<TableEntry>() {
+            @Override
+            public int compare(TableEntry o1, TableEntry o2) {
+                if(o1 == null || o2 == null) throw new IllegalArgumentException("can not be null");
+                Collator c = Collator.getInstance();
+                return c.compare(o1.getTeam().getName(), o2.getTeam().getName());
+            }
+        });
+        return Collections.unmodifiableList(entries);
     }
 
     /**
@@ -101,9 +111,17 @@ public class Table {
      */
     public List<TableEntry> getTableSortedByGoalDifference(){
         /*
-         * TODO: Implementieren Sie die Methode entsprechend des JavaDocs. Verwenden Sie eine 
+         * Implementieren Sie die Methode entsprechend des JavaDocs. Verwenden Sie eine
          * anonyme Comparator-Klasse für die Sortierung
-         */ 
+         */
+        entries.sort(new Comparator<TableEntry>() {
+            @Override
+            public int compare(TableEntry o1, TableEntry o2) {
+                if(o1==null || o2 == null) throw new IllegalArgumentException("can not be null");
+                return Integer.compare(o2.getGoalDifference(), o1.getGoalDifference());
+            }
+        });
+        return Collections.unmodifiableList(entries);
         
     }
 
@@ -118,7 +136,14 @@ public class Table {
          * TODO: Implementieren Sie die Methode entsprechend des JavaDocs. Verwenden Sie eine 
          * anonyme Comparator-Klasse für die Sortierung
          */ 
-        
+        entries.sort(new Comparator<TableEntry>() {
+            @Override
+            public int compare(TableEntry o1, TableEntry o2) {
+                if(o1 == null || o2 == null) throw new IllegalArgumentException("can not be null");
+                return Integer.compare(o2.getGoalsFor(), o1.getGoalsFor());
+            }
+        });
+        return Collections.unmodifiableList(entries);
     }
 
 

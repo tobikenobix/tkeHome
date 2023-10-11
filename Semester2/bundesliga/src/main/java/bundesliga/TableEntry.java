@@ -126,7 +126,16 @@ public class TableEntry implements Comparable<TableEntry>{
      *      - zunächst nach denk Punkten
      *      - dann nach der Tordifferenz
      *      - dann nach den erzielten Toren
-     */ 
+     */
+    @Override
+    public int compareTo(TableEntry other){
+        int res = other.points - this.points;
+        if (res == 0)
+            res = other.goalDifference - this.goalDifference;
+        if (res == 0)
+            res = other.goalsFor - this.goalsFor;
+        return res;
+    }
     
 
     
