@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd3d1984-c3f6-4d68-ae1f-bcacd76bd61a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/primeharvester/PrimeHarvester.java" afterDir="false" />
+    <list default="true" id="bd3d1984-c3f6-4d68-ae1f-bcacd76bd61a" name="Changes" comment="added PrimeHarvester.java">
       <change beforePath="$PROJECT_DIR$/../Casino/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Casino/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,11 +78,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1696509212479</updated>
-      <workItem from="1696509213508" duration="8900000" />
+      <workItem from="1696509213508" duration="10661000" />
     </task>
+    <task id="LOCAL-00001" summary="added PrimeHarvester.java">
+      <option name="closed" value="true" />
+      <created>1697008925255</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697008925255</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added PrimeHarvester.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="added PrimeHarvester.java" />
   </component>
 </project>
