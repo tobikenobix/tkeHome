@@ -61,6 +61,19 @@ public class ShelfTest {
         Book max = bookShelf.max((b1, b2) -> Integer.compare(b1.getPages(), b2.getPages()));
         assertSame(max, bookShelf.get(3));
     }
+    @Test
+    public void testTransferAndTrim(){
+        Shelf<Book> bs2 = new Shelf<>();
+        bs2.set(1, new Book("Hallo", "Tobi",5));
+        bs2.set(2, new Book("Great Adventures", "Mr Nobody", 100));
+        Shelf.transferAndTrim(bs2,bookShelf);
+        assertSame(bs2.get(1), bookShelf.get(0));
+        assertSame(bs2.get(2), bookShelf.get(1));
+    }
+    @Test
+    public void testTaTNull(){
+        assertThrows(IllegalArgumentException.class, ()->Shelf.transferAndTrim(null, bookShelf));
+    }
 
 
 }

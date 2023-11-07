@@ -102,10 +102,11 @@ public class Shelf <T extends ShelfItem> implements Iterable<T>{
 
     /**
      * Transfers all Items from one shelf to another. Gets ridd of null Items between Items
-     * @param from Shelf to tranfer from
+     * @param from Shelf to transfer from
      * @param to Shelf to transfer to
      */
-    public static void transferAndTrim(Shelf<? extends ShelfItem> from, Shelf<? super ShelfItem> to){
+    public static <S extends ShelfItem> void transferAndTrim(Shelf<? extends S> from, Shelf<? super S> to){
+        if(from == null || to == null )throw new IllegalArgumentException("Shelf can not be null!");
         //empty to shelf
         for(int i = 0; i < 4; i++){
             to.set(i, null);
@@ -113,9 +114,8 @@ public class Shelf <T extends ShelfItem> implements Iterable<T>{
         //index to transfer to
         int toIndex = 0;
         for(int i = 0; i<4; i++){
-            ShelfItem s1 = from.get(i);
-            if(s1 != null) {
-                to.set(toIndex, s1);
+            if(from.get(i) != null) {
+                to.set(toIndex, from.get(i));
                 toIndex++;
             }
         }

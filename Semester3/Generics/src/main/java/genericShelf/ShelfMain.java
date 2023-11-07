@@ -14,7 +14,7 @@ public class ShelfMain {
         Shelf<Book> bookShelf = new Shelf<>();
         bookShelf.set(0, insel);
         bookShelf.set(1, schuld);
-        bookShelf.set(3, insel);
+        bookShelf.set(3, bibiUndTina);
         printShelf(bookShelf);
 
         Tool schrzieher = new Tool("Schraubenzieher");
@@ -30,6 +30,14 @@ public class ShelfMain {
 
         Shelf<ShelfItem> generalShelf = new Shelf<>();
         generalShelf.takeFrom(newBookShelf);
+        printShelf(generalShelf);
+
+        Shelf.transferAndTrim(bookShelf,newBookShelf);
+        System.out.println("After Transfer and Trim bookshelf");
+        printShelf(newBookShelf);
+
+        Shelf.transferAndTrim(bookShelf, generalShelf);
+        System.out.println("After Transfer and Trim general shelf");
         printShelf(generalShelf);
 
     }
