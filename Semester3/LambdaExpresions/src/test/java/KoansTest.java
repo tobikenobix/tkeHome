@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Random;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
 
@@ -74,6 +75,19 @@ public class KoansTest {
         StringBuilder sb = new StringBuilder();
         Koans.forEachArray(testArr, sb::append);
         assertEquals(expected, sb.toString());
+    }
+
+    @Test
+    public void testDuplicateChecker(){
+        Predicate<String> ps = Koans.duplicateChecker();
+        assertFalse(ps.test("hallo"));
+    }
+
+    @Test
+    public void testDuplicateCheckerTwoTimes(){
+        Predicate<Integer> pi = Koans.duplicateChecker();
+        pi.test(2);
+        assertTrue(pi.test(2));
     }
 
 }

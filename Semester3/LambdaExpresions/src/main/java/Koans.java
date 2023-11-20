@@ -1,4 +1,5 @@
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.function.*;
 
 public class Koans {
@@ -43,6 +44,17 @@ public class Koans {
     }
 
     public static <T> Predicate<T> duplicateChecker(){
+        HashSet<T> alreadyCalled = new HashSet<>();
+        Predicate<T> p = new Predicate<T>() {
+            @Override
+            public boolean test(T t) {
+                if(alreadyCalled.contains(t))
+                    return true;
+                alreadyCalled.add(t);
+                return false;
+            }
+        };
+        return p;
 
     }
 }
