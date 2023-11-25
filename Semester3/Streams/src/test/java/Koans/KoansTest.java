@@ -19,4 +19,41 @@ public class KoansTest {
         assertEquals(4, distinctEntries(testStrings));
     }
 
+    @Test
+    public void testCountEvenNumbers(){
+        int[] testInts = {1,2,3,4,5};
+        assertEquals(2, countEvenNumbers(testInts));
+    }
+
+    @Test
+    public void testIntsFromStrings(){
+        String[] st = {"1","2","3","4"};
+        int[] expected = {1,2,3,4};
+        assertArrayEquals(expected, intsFromString(st));
+    }
+
+    @Test
+    public void koansRandomSum(){
+        double[] result = randomSum(10);
+
+        assertNotNull(result);
+        assertEquals(10, result.length);
+
+        assertEquals(0.0, result[0], 1e-15);
+
+        for (int i = 1; i < result.length; i++){
+            assertTrue( result[i]-result[i-1] >= 0 );
+            assertTrue( result[i]-result[i-1] < 1 );
+        }
+
+    }
+
+    @Test
+    public void testDotProduct(){
+        double[] v1 = {1,2,3};
+        double[] v2 = {4,5,6};
+        double expected = 32;
+        assertEquals(expected,dotProduct(v1,v2), 1e-15);
+    }
+
 }
