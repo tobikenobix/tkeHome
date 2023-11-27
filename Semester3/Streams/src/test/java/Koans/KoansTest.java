@@ -2,9 +2,8 @@ package Koans;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.stream.LongStream;
 
 import static org.junit.Assert.*;
 import static Koans.Koans.*;
@@ -55,5 +54,40 @@ public class KoansTest {
         double expected = 32;
         assertEquals(expected,dotProduct(v1,v2), 1e-15);
     }
+
+    @Test
+    public void testStringsForLength(){
+        ArrayList<String> testStrings = new ArrayList<>();
+        Collections.addAll(testStrings, "a","b","cc","dd","eee");
+        ArrayList<String> expected = new ArrayList<>();
+        Collections.addAll(expected,"a","b");
+        Map<Integer, List<String>> s = stringsForLength(testStrings);
+        assertEquals(expected,s.get(1));
+    }
+
+    @Test
+    public void testCollatzSeries(){
+        LongStream test = collatzSeries(11);
+        long[] testArr = test.limit(3).toArray();
+        long[] expected = {11,34,17};
+        assertArrayEquals(expected,testArr);
+    }
+
+    @Test
+    public void testCollatzTruncated(){
+        long[] expected = {10,5,16,8,4,2,1};
+        assertArrayEquals(expected, collatzTruncated(10).toArray());
+    }
+
+    @Test
+    public void testCollatzOrbit(){
+        assertTrue(collatzOrbit(10));
+    }
+
+    @Test
+    public void testCollatzTrueForLimit(){
+        assertTrue(collatzTrueForLimit(100));
+    }
+
 
 }
