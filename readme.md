@@ -1,1 +1,13 @@
-# Collection of my solutions Java Programming take home exams
+# Collection of assignments we had to do for class
+
+## Semester 2 
+Basic Java 
+
+## Semester 3
+- Unit Testing
+- Functional Programming
+- Threads
+
+## Semester 6
+### Big Data algortihms
+some implementaions of interesting algorihms
