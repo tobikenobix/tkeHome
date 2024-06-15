@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Bucketing {
@@ -20,20 +17,20 @@ public class Bucketing {
         try{
             //#### file handling block
             BufferedReader br = new BufferedReader(new FileReader(filepath));
-            String line = br.readLine();
+            Scanner sc = new Scanner(br);
             // actual start of the algorithm
             // create 1 to k hash functions, buckets and levels
             int[] median = new int[k];
             HashFunctions[] hashFunctions = new HashFunctions[k];
-            List<Long>[] buckets = new ArrayList[k];
+            Set<Long>[] buckets = new HashSet[k];
             int[] m = new int[k];
             for(int i =0; i<k; i++){
                 hashFunctions[i] = new HashFunctions();
-                buckets[i] = new ArrayList<>();
+                buckets[i] = new HashSet<>();
                 m[i] = 1; //level
             }
-            while(line != null){
-                long x = Long.parseLong(line.trim());
+            while(sc.hasNextLine()){
+                long x = Long.parseLong(sc.nextLine().trim());
                 for(int i =0; i<k; i++){
                     long v = hashFunctions[i].tabHash(x);
                     int z = Long.numberOfLeadingZeros(v);
@@ -44,14 +41,14 @@ public class Bucketing {
                             //filter out the elements that dont have at least m leading zeros
                             int finalI = i;
                             buckets[i] = buckets[i].stream().filter(y-> Long.numberOfLeadingZeros(y) > m[finalI]).parallel()
-                            .collect(Collectors.toCollection(ArrayList::new));
+                            .collect(Collectors.toCollection(HashSet::new));
                         }
                     }
                     median[i] = (int) (buckets[i].size()* Math.pow(2,m[i]));
                 }
-                line = br.readLine();
             }
             br.close();
+            sc.close();
             Arrays.sort(median);
             return median[median.length/2];
         } catch (IOException e) {
@@ -60,7 +57,7 @@ public class Bucketing {
         return 5;
     }
     public static void main(String[] args) {
-        bucketIt("short_set.txt",3,2);
+        bucketIt("set_2M.txt",400,51);
     }
 
 }
