@@ -25,7 +25,7 @@ public class Bucketing {
             // create 1 to k hash functions, buckets and levels
             int[] median = new int[k];
             HashFunctions[] hashFunctions = new HashFunctions[k];
-            List<Long>[] buckets = new List[k];
+            List<Long>[] buckets = new ArrayList[k];
             int[] m = new int[k];
             for(int i =0; i<k; i++){
                 hashFunctions[i] = new HashFunctions();
@@ -43,7 +43,8 @@ public class Bucketing {
                             m[i] += 1;
                             //filter out the elements that dont have at least m leading zeros
                             int finalI = i;
-                            buckets[i] = buckets[i].stream().filter(y-> Long.numberOfLeadingZeros(y) > m[finalI]).parallel().toList();
+                            buckets[i] = buckets[i].stream().filter(y-> Long.numberOfLeadingZeros(y) > m[finalI]).parallel()
+                            .collect(Collectors.toCollection(ArrayList::new));
                         }
                     }
                     median[i] = (int) (buckets[i].size()* Math.pow(2,m[i]));
