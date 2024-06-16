@@ -8,56 +8,67 @@ public class Bucketing {
 
     /**
      * Implements the Bucketing algorithm from lecture Online Algos page 111
-     * @param filepath Input Stream, in this case a file with numbers - Data Stream S
+     * @param data Input Stream, in this case a file with numbers - Data Stream S
      * @param b bucket size
      * @param k number of hash functions
      * @return Estimate E of cardinality F0 of S
      */
-    public static int bucketIt(String filepath, int b, int k){
-        try{
-            //#### file handling block
-            BufferedReader br = new BufferedReader(new FileReader(filepath));
-            Scanner sc = new Scanner(br);
-            // actual start of the algorithm
+    public static long bucketIt(List<Long> data, int b, int k){
+
             // create 1 to k hash functions, buckets and levels
-            int[] median = new int[k];
+            long[] median = new long[k];
             HashFunctions[] hashFunctions = new HashFunctions[k];
-            Set<Long>[] buckets = new HashSet[k];
+            Set<Long>[] buckets = new HashSet[k]; //HashSet does not allow duplicates
             int[] m = new int[k];
             for(int i =0; i<k; i++){
                 hashFunctions[i] = new HashFunctions();
                 buckets[i] = new HashSet<>();
                 m[i] = 1; //level
             }
-            while(sc.hasNextLine()){
-                long x = Long.parseLong(sc.nextLine().trim());
-                for(int i =0; i<k; i++){
+            for(long x : data) {
+                for (int i = 0; i < k; i++) {
                     long v = hashFunctions[i].tabHash(x);
-                    int z = Long.numberOfLeadingZeros(v);
-                    if((z >= m[i])&& !buckets[i].contains(v)){
+                    int z = Integer.numberOfLeadingZeros((int) v);
+                    if(z >= m[i]){
+                        //System.out.println(z);
                         buckets[i].add(v);
                         if(buckets[i].size() > b){
                             m[i] += 1;
-                            //filter out the elements that dont have at least m leading zeros
-                            int finalI = i;
-                            buckets[i] = buckets[i].stream().filter(y-> Long.numberOfLeadingZeros(y) > m[finalI]).parallel()
-                            .collect(Collectors.toCollection(HashSet::new));
+                            Set<Long> set = new HashSet<>();
+                            for(long j : buckets[i]){
+                                if(Integer.numberOfLeadingZeros((int) j)>m[i])
+                                    set.add(j);
+                            }
+                            buckets[i] = set;
                         }
                     }
-                    median[i] = (int) (buckets[i].size()* Math.pow(2,m[i]));
                 }
             }
-            br.close();
-            sc.close();
-            Arrays.sort(median);
+            for(int i =0; i<k; i++){
+                median[i] = (long) (buckets[i].size() * Math.pow(2, m[i]));
+            }
             return median[median.length/2];
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return 5;
     }
-    public static void main(String[] args) {
-        bucketIt("set_2M.txt",400,51);
+
+
+    public static void main(String[] args) throws IOException {
+
+        List<Long> data = readData("set_2M.txt");
+        long start = System.currentTimeMillis();
+        System.out.println(bucketIt(data, 400, 51));
+        long end = System.currentTimeMillis();
+        System.out.println("It took: " + (end - start)+" ms");
+    }
+    //2147483647
+    private static List<Long> readData(String filename) throws IOException {
+        List<Long> data = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(filename));
+        String line;
+        while ((line = br.readLine()) != null) {
+            data.add(Long.parseLong(line));
+        }
+        br.close();
+        return data;
     }
 
 }
