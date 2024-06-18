@@ -28,7 +28,7 @@ public class Bucketing {
             for(long x : data) {
                 for (int i = 0; i < k; i++) {
                     long v = hashFunctions[i].tabHash(x);
-                    int z = Integer.numberOfLeadingZeros((int) v);
+                    int z = Long.numberOfLeadingZeros(v);
                     if(z >= m[i]){
                         //System.out.println(z);
                         buckets[i].add(v);
@@ -36,7 +36,7 @@ public class Bucketing {
                             m[i] += 1;
                             Set<Long> set = new HashSet<>();
                             for(long j : buckets[i]){
-                                if(Integer.numberOfLeadingZeros((int) j)>m[i])
+                                if(Long.numberOfLeadingZeros(j)>m[i])
                                     set.add(j);
                             }
                             buckets[i] = set;
@@ -47,7 +47,8 @@ public class Bucketing {
             for(int i =0; i<k; i++){
                 median[i] = (long) (buckets[i].size() * Math.pow(2, m[i]));
             }
-            return median[median.length/2];
+            Arrays.sort(median);
+            return  median[median.length/2];
     }
 
 
@@ -55,11 +56,13 @@ public class Bucketing {
 
         List<Long> data = readData("set_2M.txt");
         long start = System.currentTimeMillis();
-        System.out.println(bucketIt(data, 400, 51));
+        for(int i =0; i<10; i++){
+            System.out.println(bucketIt(data, 400, 51));
+        }
         long end = System.currentTimeMillis();
         System.out.println("It took: " + (end - start)+" ms");
     }
-    //2147483647
+
     private static List<Long> readData(String filename) throws IOException {
         List<Long> data = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -70,5 +73,7 @@ public class Bucketing {
         br.close();
         return data;
     }
+
+
 
 }
