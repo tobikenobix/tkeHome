@@ -67,13 +67,13 @@ public class Buckster {
         //System.out.println(bucketing(fileWalker("set_2M.txt"),9600,151));
         System.out.println(fileWalker("set_2M.txt").stream().distinct().toArray().length);
         List<Long> test  = new ArrayList<>();
-        for(long i = 0; i<1000000; i++){
+        for(long i = 0; i<5000; i++){
             test.add(i);
-            test.add(i*-1);
+            test.add(i*(-1));
         }
-        System.out.println(bucketing(fileWalker("short_set.txt"),9600,151));
-        //System.out.println(bucketing(test,9600,151));
-        System.out.println(calcError(fileWalker("set_2M.txt"), 400, 51,10, 2000000));
+        //System.out.println(bucketing(fileWalker("short_set.txt"),9600,151));
+        System.out.println(bucketing(test,9600,151));
+        //System.out.println(calcError(fileWalker("set_2M.txt"), 400, 51,10, 2000000));
     }
 
     private static double calcError(List<Long> S, int b, int k, int m, long F) {
