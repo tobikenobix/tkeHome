@@ -40,7 +40,7 @@ public class Buckster {
             //hash every item with every hash function and "store" it in the corresponding bucket
             for(int i = 0; i < k; i++){
                 long v = hashFunction[i].tabHash(x); //hash each value
-                int z = Long.numberOfLeadingZeros(v); //get all leading zeros
+                int z = Integer.numberOfLeadingZeros((int)v); //get all leading zeros
                 if(z>=m[i]){ //check if the item has at least the amount of zeros as our level
                     buckets.get(i).add(v); //checks passed, add it to the bucket of the hash function
                     if(buckets.get(i).size() > b){ //check if our bucket size is still in range for this hash function
@@ -67,11 +67,20 @@ public class Buckster {
         //System.out.println(bucketing(fileWalker("set_2M.txt"),9600,151));
         System.out.println(fileWalker("set_2M.txt").stream().distinct().toArray().length);
         List<Long> test  = new ArrayList<>();
-        for(long i = 2134076626; i<2134076626+1000000; i++){
+        for(long i = 0; i<1000000; i++){
             test.add(i);
             test.add(i*-1);
         }
-        System.out.println(bucketing(fileWalker("set_2M.txt"),400,51));
+        System.out.println(bucketing(fileWalker("short_set.txt"),9600,151));
         //System.out.println(bucketing(test,9600,151));
+        System.out.println(calcError(fileWalker("set_2M.txt"), 400, 51,10, 2000000));
+    }
+
+    private static double calcError(List<Long> S, int b, int k, int m, long F) {
+        double estimates = 0;
+        for(int i =0; i<m; i++){
+            estimates +=  100* ((double) (bucketing(S, b, k) - F) /F);
+        }
+        return ((double) 1 /m) * estimates;
     }
 }
