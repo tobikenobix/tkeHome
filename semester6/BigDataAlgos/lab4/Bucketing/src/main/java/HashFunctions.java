@@ -7,16 +7,15 @@ public class HashFunctions {
         this.hTab = fillHTab();
     }
 
-    public long tabHash(long x) {
-        long hash = 0;
+    public int tabHash(long x) {
+        int hash = 0;
         long c;
-        for (int i=0; i<4; i++)
-        {
+        for (int i=0; i<4; i++) {
             c = x & 0xff;
             hash ^= hTab[i][(int) c];
             x = x >> 8;
         }
-        return hash & 0xffffffffL;
+        return hash;
     }
     private long[][] fillHTab(){
         long[][] hTab = new long[4][256];
