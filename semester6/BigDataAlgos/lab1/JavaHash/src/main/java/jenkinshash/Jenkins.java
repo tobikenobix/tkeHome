@@ -48,6 +48,7 @@ public class Jenkins {
         long end = System.currentTimeMillis();
         System.out.println(jhmb);
         System.out.printf("\n %x\n", jhmb);
+        System.out.println(Integer.toBinaryString(jhmb));
         System.out.println("Jenkins Hash Took " + (end - start) + "ms");
 
     }
