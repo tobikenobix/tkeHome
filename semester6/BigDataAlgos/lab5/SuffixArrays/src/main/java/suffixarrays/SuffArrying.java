@@ -16,6 +16,7 @@ public class SuffArrying {
         Path filePath = Path.of(fileName);
         String input = Files.readString(filePath, StandardCharsets.ISO_8859_1);
         input = input.replace("\n", "");
+        input = input.replace("\r", " ");
         return input +"$";
     }
 
