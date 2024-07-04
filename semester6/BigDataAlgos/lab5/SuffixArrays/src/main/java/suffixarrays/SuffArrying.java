@@ -14,7 +14,7 @@ public class SuffArrying {
 
     public static String readAFileIn(String fileName) throws IOException {
         Path filePath = Path.of(fileName);
-        String input = Files.readString(filePath, StandardCharsets.ISO_8859_1);
+        String input = Files.readString(filePath, StandardCharsets.ISO_8859_1).toLowerCase();
         input = input.replace("\n", "");
         input = input.replace("\r", " ");
         return input +"$";
